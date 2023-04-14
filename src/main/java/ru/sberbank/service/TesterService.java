@@ -12,24 +12,13 @@ public class TesterService {
     }
 
     public boolean CreateTester(String firstName, String secondName){
-        if(firstName != null && firstName.isEmpty()){
-            if (secondName == null && firstName.isEmpty()){
-                return false;
-            }
+        if((firstName == null && firstName.isEmpty()) || (secondName == null && firstName.isEmpty())){
+            throw new IllegalArgumentException("Фамилия или имя пустые");
         }
-        int id = (int)(1 + Math.random() * 10);
-        boolean f = false;
-        for(Tester t: testers){
-            if(t.id == id){
-                f = true;
-            }
-        }
-        if(!f){
-            Tester t = new Tester(id, firstName, secondName);
-            testers.add(t);
-            return true;
-        }
-        return false;
+        int id = testers.size();
+        Tester t = new Tester(++id, firstName, secondName);
+        testers.add(t);
+        return true;
     }
 
     public Tester GetTester(String firstName, String secondName){
@@ -38,7 +27,7 @@ public class TesterService {
                 return t;
             }
         }
-        return null;
+        throw new IllegalStateException("Тестер не найден");
     }
 
     public ArrayList<Tester> GetFreeTesters(){
