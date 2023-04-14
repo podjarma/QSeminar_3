@@ -12,11 +12,11 @@ public class DeveloperService {
     }
 
     public boolean createDeveloper(int id, String firstName, String secondName) {
-        if((firstName != null && !firstName.isEmpty()) && (secondName != null  && !secondName.isEmpty())) {
-            list.add(new Developer(id, firstName, secondName));
-            return true;
+        if((firstName == null && firstName.isEmpty()) || (secondName == null  && secondName.isEmpty())) {
+            throw new IllegalArgumentException("Имя или Фамилия пустые");
         }
-        return false;
+        list.add(new Developer(id, firstName, secondName));
+        return true;
     }
 
     public Developer getDeveloper(String firstName, String secondName) {
@@ -25,7 +25,7 @@ public class DeveloperService {
                 return t;
             }
         }
-        return null;
+        throw new IllegalStateException("Разработчик не найден");
     }
 
     public ArrayList<Developer> getFreeDevelopers() {

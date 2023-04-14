@@ -38,4 +38,27 @@ public class TaskService {
         return list;
     }
 
+    public Task getTaskBId(int id){
+        for (Task t: arrayList) {
+            if (t.id == id) {
+                return t;
+            }
+        }
+        throw new IllegalStateException("Исключение");
+    }
+
+
+    public void addCommentToTask(int id, String comment){
+        Task t = getTaskBId(id);
+        if (comment.isEmpty() && comment == null){
+            throw new IllegalArgumentException("Комментарий пустой");
+        }
+        int cnt = 0;
+        for (Integer i: t.comments.keySet()){
+            if (i > cnt){
+                cnt = i;
+            }
+        }
+        t.comments.put(++cnt, comment);
+    }
 }
